@@ -1,0 +1,130 @@
+---
+name: useSessionStorageObject
+menu: Hooks
+route: /useSessionStorageObject
+---
+
+import { UseSessionStorageObjectExample } from '../__docz__/components/UseSessionStorageObjectExample';
+
+<h1>useSessionStorageObject</h1>
+
+## Description
+
+This hook gets and sets an `Object` in [sessionStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage). This includes arrays.
+
+Uses [`JSON.stringify()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) 
+and [`JSON.parse()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse) for string encoding, so make sure your object is compatible with that interface. For objects that `JSON.stringify()` can't handle, provide your own encoding via [useSessionStorageItem](/useSessionStorageItem).
+
+Features synchronization across hooks sharing the same key name.
+
+## Usage
+
+```jsx
+import { useSessionStorageObject } from 'react-use-window-sessionstorage';
+```
+
+In your function component:
+
+```jsx
+const [value, setValue] = useSessionStorageObject('myObj', { a: 'hello', b: 123 });
+```
+
+The hook takes a key name and an optional default value argument. The default value will be immediately written to sessionStorage and returned if no value is present already. Uses `null` when no default value is provided.
+
+Use `value` and `setValue` to read and write the value.
+
+Because sessionStorage accepts strings only, the value is encoded using 
+[`JSON.stringify()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) 
+and decoded using [`JSON.parse()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse). Make sure your object is compatible with that interface.
+
+### Additional Features
+
+The hook provides additional features in its return array, should you be interested:
+
+```jsx
+const [value, setValue, loading, available, reset, restore] = useSessionStorageObject('myObj', { a: 'hello', b: 123 });
+```
+
+- A `loading` value of `true` indicates that the value is being loaded from sessionStorage.
+- An `available` value of `true` indicates that `sessionStorage` is supported and available for use. 
+- The `reset()` function sets the value back to the provided default, or `null` if none was given.
+- The `restore()` function retrieves the latest value from sessionStorage. Use this if the sessionStorage value changes outside of this hook and you need to restore it to the latest.
+
+## Signature
+
+`useSessionStorageObject(keyName: string, defaultValue?: Object | null) => [Object | null, (value: Object | null) => void, boolean, () => void, () => void]`
+
+### Props
+
+| Prop | Type | Description |
+|------|------|-------------|
+| keyName | `string` | **Required.** Key name to use in sessionStorage. |
+| defaultValue | `Object` &#124; `null` | Optional. Provide a default `Object` value when the key's value is not found in sessionStorage. Will be immediately written to sessionStorage if not present. Use `null` for no default. |
+
+### Return
+
+The hook returns an array containing:
+
+| Index | Name | Type | Description |
+|-------|------|------|-------------|
+| 0 | value | `Object` &#124; `null` | The `Object` value from sessionStorage, when `loading` is `false`. Will be the default value (or `null` if none provided) while loading is `true`. If `null` when not loading, the key was not found in sessionStorage. |
+| 1 | setValue | `(value: Object` &#124; `null) => void` | Sets the value in sessionStorage. Provide `null` to set it back to the default value. Providing `null` will delete the key from sessionStorage if the default value is `null`. |
+| 2 | loading | `boolean` | `true` while the value loads from sessionStorage, `false` otherwise. |
+| 3 | available | `boolean` | `true` if sessionStorage is supported and available for use, `false` otherwise. |
+| 4 | reset | `() => void` | Reset the value to the default. |
+| 5 | restore | `() => void` | Retrieve the latest value from sessionStorage. Use this if the sessionStorage value changes outside of this hook and you need to restore it to the latest. |
+
+## Example
+
+<div style={{border: 'solid 2px #67788a', padding: '20px'}}>
+  <UseSessionStorageObjectExample />
+</div>
+
+```jsx
+import * as React from 'react';
+import { useSessionStorageObject } from 'react-use-window-sessionstorage';
+
+export function UseSessionStorageObjectExample() {
+  const defaultValue = { first: 'Ron', last: 'Burgundy' };
+  const [enteredFirstName, setEnteredFirstName] = React.useState(defaultValue.first);
+  const [enteredLastName, setEnteredLastName] = React.useState(defaultValue.last);
+  const enteredObj = { first: enteredFirstName, last: enteredLastName };
+  const [value, setValue, loading, available, reset] = useSessionStorageObject('objValue', defaultValue);
+  const [value2, setValue2, loading2] = useSessionStorageObject('objValue', defaultValue);
+
+  return (
+    <div>
+      {!loading && (
+        <div>
+          <div>
+            Key "objValue": {'{'} first:
+            <input
+              type="text"
+              value={enteredFirstName}
+              onChange={e => setEnteredFirstName(e.target.value)}
+              onKeyPress={e => e.key === 'Enter' && setValue(enteredObj)}
+            />
+            , last:
+            <input
+              type="text"
+              value={enteredLastName}
+              onChange={e => setEnteredLastName(e.target.value)}
+              onKeyPress={e => e.key === 'Enter' && setValue(enteredObj)}
+            />
+            {' } '}
+            <button onClick={() => setValue(enteredObj)}>Set</button>
+          </div>
+          <div>
+            <strong>Stored value:</strong> {JSON.stringify(value)}
+          </div>
+        </div>
+      )}
+      <div>
+        <button onClick={() => reset()}>Reset "objValue" to default</button>
+      </div>
+      <hr />
+      {!loading2 && <div>Another "objValue" hook (different hook, will synchronize): {JSON.stringify(value2)}</div>}
+    </div>
+  );
+}
+```

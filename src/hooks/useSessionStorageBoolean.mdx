@@ -1,0 +1,109 @@
+---
+name: useSessionStorageBoolean
+menu: Hooks
+route: /useSessionStorageBoolean
+---
+
+import { UseSessionStorageBooleanExample } from '../__docz__/components/UseSessionStorageBooleanExample';
+
+<h1>useSessionStorageBoolean</h1>
+
+## Description
+
+This hook gets and sets a `boolean` in [sessionStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage). 
+
+Features synchronization across hooks sharing the same key name.
+
+## Usage
+
+```jsx
+import { useSessionStorageBoolean } from 'react-use-window-sessionstorage';
+```
+
+In your function component:
+
+```jsx
+const [value, setValue] = useSessionStorageBoolean('swordEquipped', true);
+```
+
+The hook takes a key name and an optional default value argument. The default value will be immediately written to sessionStorage and returned if no value is present already. Uses `null` when no default value is provided.
+
+Use `value` and `setValue` to read and write the value.
+
+Because sessionStorage accepts strings only, the value is encoded using 
+[`JSON.stringify()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) 
+and decoded using [`JSON.parse()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse).
+
+### Additional Features
+
+The hook provides additional features in its return array, should you be interested:
+
+```jsx
+const [value, setValue, loading, available, reset, restore] = useSessionStorageBoolean('swordEquipped', true);
+```
+
+- A `loading` value of `true` indicates that the value is being loaded from sessionStorage.
+- An `available` value of `true` indicates that `sessionStorage` is supported and available for use. 
+- The `reset()` function sets the value back to the provided default, or `null` if none was given.
+- The `restore()` function retrieves the latest value from sessionStorage. Use this if the sessionStorage value changes outside of this hook and you need to restore it to the latest.
+
+## Signature
+
+`useSessionStorageBoolean(keyName: string, defaultValue?: boolean | null) => [boolean | null, (value: boolean | null) => void, boolean, () => void, () => void]`
+
+### Props
+
+| Prop | Type | Description |
+|------|------|-------------|
+| keyName | `string` | **Required.** Key name to use in sessionStorage. |
+| defaultValue | `boolean` &#124; `null` | Optional. Provide a default `boolean` value when the key's value is not found in sessionStorage. Will be immediately written to sessionStorage if not present. Use `null` for no default. |
+
+### Return
+
+The hook returns an array containing:
+
+| Index | Name | Type | Description |
+|-------|------|------|-------------|
+| 0 | value | `boolean` &#124; `null` | The `boolean` value from sessionStorage, when `loading` is `false`. Will be the default value (or `null` if none provided) while loading is `true`. If `null` when not loading, the key was not found in sessionStorage. |
+| 1 | setValue | `(value: boolean` &#124; `null) => void` | Sets the value in sessionStorage. Provide `null` to set it back to the default value. Providing `null` will delete the key from sessionStorage if the default value is `null`. |
+| 2 | loading | `boolean` | `true` while the value loads from sessionStorage, `false` otherwise. |
+| 3 | available | `boolean` | `true` if sessionStorage is supported and available for use, `false` otherwise. |
+| 4 | reset | `() => void` | Reset the value to the default. |
+| 5 | restore | `() => void` | Retrieve the latest value from sessionStorage. Use this if the sessionStorage value changes outside of this hook and you need to restore it to the latest. |
+
+## Example
+
+<div style={{border: 'solid 2px #67788a', padding: '20px'}}>
+  <UseSessionStorageBooleanExample />
+</div>
+
+```jsx
+import * as React from 'react';
+import { useSessionStorageBoolean } from 'react-use-window-sessionstorage';
+
+export function UseSessionStorageBooleanExample() {
+  const defaultValue = true;
+  const [value, setValue, loading, available, reset] = useSessionStorageBoolean('boolValue', defaultValue);
+  const [value2, setValue2, loading2] = useSessionStorageBoolean('boolValue', defaultValue);
+
+  return (
+    <div>
+      {!loading && (
+        <div>
+          <div>
+            Key "boolValue": <button onClick={() => setValue(!value)}>Toggle</button>
+          </div>
+          <div>
+            <strong>Stored value:</strong> {value + ''}
+          </div>
+        </div>
+      )}
+      <div>
+        <button onClick={() => reset()}>Reset "boolValue" to default</button>
+      </div>
+      <hr />
+      {!loading2 && <div>Another "boolValue" hook (different hook, will synchronize): {value2 + ''}</div>}
+    </div>
+  );
+}
+```

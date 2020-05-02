@@ -16,45 +16,166 @@ import githubSvg from '../__docz__/images/github.svg';
 	alignItems: 'center',
 }}>
   <div>
-    <h1>React Library Starter</h1>
+    <h1>React Use Window sessionStorage</h1>
   </div>
   <div>
-    <a href="https://github.com/devboldly/react-library-starter" target="_blank" rel="noopener noreferrer">
+    <a href="https://github.com/devboldly/react-use-window-sessionstorage/" target="_blank" rel="noopener noreferrer">
       <SvgIcon src={githubSvg} size={28} style={{ margin: '0 0 0 20px' }} />
     </a>
   </div>
 </div>
 
-**This header will contain a brief description of the project.**
+**React hooks for accessing the sessionStorage Web Storage API.**
 
-👁️ **[Live Demo](/ExampleComponent#example)**
+👁️ **[Live Demo](/useSessionStorageString#example)**
 
 ## Overview
 
-This section will contain an overview so people can have a high-level understanding of the project.
+A set of hooks to easily store and retrieve data from [sessionStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage).
+
+Encoding is handled for common data types, including [booleans](/useSessionStorageBoolean), [numbers](/useSessionStorageNumber), [strings](/useSessionStorageString), and [objects](/useSessionStorageObject), or you can [encode data yourself](/useSessionStorageItem) if you'd like.
+
+Changes to sessionStorage are synchronized across all hooks automatically.
+
+> **What is sessionStorage?** The `sessionStorage` property allows you to store `{key: value}` string data that is cleared when the page session ends. A page session lasts as long as the browser is open, and survives over page reloads and restores.
+
+> For localStorage, check out sister project [react-use-window-localstorage](https://devboldly.github.io/react-use-window-localstorage).
 
 ### Features include:
 
-- **🚀 List your features, use fun [emojis](https://emojipedia.org/search/?q=rocket)**
-  - Give a little more info on each feature or mention benefits.
+- **💪 Easily add `sessionStorage` support**
+  - Easily store data that is cleared when the page session ends.
+- **🔢 Support for primitives and objects**
+  - Store and retrieve strings, booleans, numbers, and objects effortlessly.
+- **💁 Default values**
+  - Optional support for defaults is baked right in.
+- **🔄 Automatic synchronization**
+  - Changes are synchronized across hooks automatically.
+- **👾 Customizable**
+  - Want to store something unusual? Just provide your own encoder.
+- **⛔ Storage availability detection**
+  - Detects if `sessionStorage` is available for use and lets you know otherwise.
+- **🧼 Clearing support**
+  - Clear all sessionStorage values and reset hooks to defaults with one simple call.
 
 ## Installation
 
 ```
-npm i @devboldly/react-library-starter
+npm i react-use-window-sessionstorage
 ```
 
 ## Quick Start
 
-This section will contain a copy/paste example so people can get started quickly.
+### Storing Strings
+
+Use the [useSessionStorageString](/useSessionStorageString) hook:
 
 ```jsx
-import { ExampleComponent } from '@devboldly/react-library-starter';
+import { useSessionStorageString } from 'react-use-window-sessionstorage';
+```
+
+In your function component:
+
+```jsx
+const defaultValue = 'cyan';
+const [value, setValue] = useSessionStorageString('favColor', defaultValue);
+```
+
+### Storing Objects
+
+Use the [useSessionStorageObject](/useSessionStorageObject) hook:
+
+```jsx
+import { useSessionStorageObject } from 'react-use-window-sessionstorage';
+```
+
+In your function component:
+
+```jsx
+const defaultValue = { a: 'hello', b: 123 };
+const [value, setValue] = useSessionStorageObject('myObj', defaultValue);
+```
+
+Note that your objects must be compatible with [JSON.stringify()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify). Use [useSessionStorageItem](/useSessionStorageItem) otherwise.
+
+### Storing Booleans
+
+Use the [useSessionStorageBoolean](/useSessionStorageBoolean) hook:
+
+```jsx
+import { useSessionStorageBoolean } from 'react-use-window-sessionstorage';
+```
+
+In your function component:
+
+```jsx
+const defaultValue = true;
+const [value, setValue] = useSessionStorageBoolean('swordEquipped', defaultValue);
+```
+
+### Storing Numbers
+
+Use the [useSessionStorageNumber](/useSessionStorageNumber) hook:
+
+```jsx
+import { useSessionStorageNumber } from 'react-use-window-sessionstorage';
+```
+
+In your function component:
+
+```jsx
+const defaultValue = 3.14159;
+const [value, setValue] = useSessionStorageNumber('importantNumber', defaultValue);
+```
+
+> Note: All value defaults are optional. Hooks will return `null` if none is provided.
+
+### Storing Everything Else
+
+If you'd like to store something other than the data types above, define your own encoding using the [useSessionStorageItem](/useSessionStorageItem) hook.
+
+Here's a starting point:
+
+```jsx
+import { useSessionStorageItem } from 'react-use-window-sessionstorage';
+```
+
+In your function component:
+
+```jsx
+const defaultValue = 'something custom';
+const encode = value => JSON.stringify(value);
+const decode = itemString => JSON.parse(itemString);
+const [value, setValue] = useSessionStorageItem('name', defaultValue, encode, decode);
+```
+
+Provide `null` for no default value.
+
+### Additional Features
+
+All hooks provide additional features in their return arrays, should you be interested:
+
+```jsx
+const [value, setValue, loading, available, reset, restore] = useSessionStorageString('favColor', 'cyan');
+```
+
+- A `loading` value of `true` indicates that the value is being loaded from sessionStorage.
+- An `available` value of `true` indicates that `sessionStorage` is supported and available for use. 
+- The `reset()` function sets the value back to the provided default, or `null` if none was given.
+- The `restore()` function retrieves the latest value from sessionStorage. Use this if the sessionStorage value changes outside of this hook and you need to restore it to the latest.
+
+### Clearing `sessionStorage`
+
+```jsx
+import { useClear } from 'react-use-window-sessionstorage';
 ```
 
 ```jsx
-<ExampleComponent text="Example Component"/>
+const clearSessionStorage = useClearSessionStorage();
 ```
+
+Call `clearSessionStorage()` to clear all values in sessionStorage using [sessionStorage.clear()](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage) 
+and reset all hooks to their defaults (or `null` if none provided).
 
 ## TypeScript
 
@@ -70,6 +191,6 @@ For major changes, open an issue first to discuss what you'd like to change.
 
 See the [library template](https://tinyurl.com/ya3k258d) for npm script documentation.
 
-## ⭐ Found It Helpful? [Star It!](https://github.com/devboldly/react-library-starter/stargazers)
+## ⭐ Found It Helpful? [Star It!](https://github.com/devboldly/react-use-window-sessionstorage/stargazers)
 
-If you found this project helpful, let the community know by giving it a [star](https://github.com/devboldly/react-library-starter/stargazers): [👉⭐](https://github.com/devboldly/react-library-starter/stargazers)
+If you found this project helpful, let the community know by giving it a [star](https://github.com/devboldly/react-use-window-sessionstorage/stargazers): [👉⭐](https://github.com/devboldly/react-use-window-sessionstorage/stargazers)

@@ -1,0 +1,103 @@
+---
+name: useClearSessionStorage
+menu: Hooks
+route: /useClearSessionStorage
+---
+
+import { UseClearExample } from '../__docz__/components/UseClearExample';
+
+<h1>useClearSessionStorage</h1>
+
+## Description
+
+This hook calls [sessionStorage.clear()](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage) to clear all items from `sessionStorage`. 
+
+All hooks will be reset back to their default values, or to `null` if none was provided.
+
+## Usage
+
+```jsx
+import { useClearSessionStorage } from 'react-use-window-sessionstorage';
+```
+
+In your function component:
+
+```jsx
+const clearSessionStorage = useClearSessionStorage();
+```
+
+Call `clearSessionStorage()` to clear sessionStorage.
+
+## Signature
+
+`useClearSessionStorage() => (() => void)`
+
+### Props
+
+The hook takes no props.
+
+### Return
+
+The hook returns a function, `clearSessionStorage`:
+
+```jsx
+clearSessionStorage() => void
+```
+
+Calling this function clears sessionStorage and synchronizes all hooks.
+
+## Example
+
+In the following example, four numbers are defaulted to `0` and can be set to randomly generated values. The fifth value has no default. Calling `clearSessionStorage()` will clear
+sessionStorage using `sessionStorage.clear()` and synchronize all hooks.
+
+<div style={{border: 'solid 2px #67788a', padding: '20px'}}>
+  <UseClearExample />
+</div>
+
+```jsx
+import * as React from 'react';
+import { useClearSessionStorage, useSessionStorageNumber } from 'react-use-window-sessionstorage';
+
+export function UseClearExample() {
+  const [val1, setVal1] = useSessionStorageNumber('val1', 0);
+  const [val2, setVal2] = useSessionStorageNumber('val2', 0);
+  const [val3, setVal3] = useSessionStorageNumber('val3', 0);
+  const [val4, setVal4] = useSessionStorageNumber('val4', 0);
+  const [val5, setVal5] = useSessionStorageNumber('val5');
+  const clearSessionStorage = useClearSessionStorage();
+
+  return (
+    <div>
+      <div>
+        <div>
+          <strong>Stored values:</strong>
+          <ul>
+            <li>val1: {val1}</li>
+            <li>val2: {val2}</li>
+            <li>val3: {val3}</li>
+            <li>val4: {val4}</li>
+            <li>val5 (no default): {val5}</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <button
+          onClick={() => {
+            setVal1(Math.random());
+            setVal2(Math.random());
+            setVal3(Math.random());
+            setVal4(Math.random());
+            setVal5(Math.random());
+          }}
+        >
+          Generate Random Values
+        </button>
+      </div>
+      <div>
+        <button onClick={() => clearSessionStorage()}>Clear</button>
+      </div>
+    </div>
+  );
+}
+```

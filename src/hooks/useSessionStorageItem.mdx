@@ -1,0 +1,132 @@
+---
+name: useSessionStorageItem
+menu: Hooks
+route: /useSessionStorageItem
+---
+
+import { UseSessionStorageItemExample } from '../__docz__/components/UseSessionStorageItemExample';
+
+<h1>useSessionStorageItem</h1>
+
+## Description
+
+This hook gets and sets an item in [sessionStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage) using the provided encode and decode functions.
+
+Features synchronization across hooks sharing the same key name.
+
+> Hooks for [boolean](/useSessionStorageBoolean), [number](/useSessionStorageNumber), and [string](/useSessionStorageString) primitives are available. There is also a [hook for objects](/useSessionStorageObject) that uses [JSON string encoding](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify).
+
+## Usage
+
+```jsx
+import { useSessionStorageItem } from 'react-use-window-sessionstorage';
+```
+
+In your function component:
+
+```jsx
+const encode = value => JSON.stringify(value);
+const decode = itemString => JSON.parse(itemString);
+const [value, setValue] = useSessionStorageItem('name', 'Zelda', encode, decode);
+```
+
+The hook takes a key name and a default value argument, which should be `null` when no default value is desired. When not `null`, the default value will be immediately written to sessionStorage and returned if no value is present already.
+
+Use `value` and `setValue` to read and write the value.
+
+Because sessionStorage accepts strings only, the value must be encoded and decoded as such using the encode and decode functions you provide.
+
+### Additional Features
+
+The hook provides additional features in its return array, should you be interested:
+
+```jsx
+const [value, setValue, loading, available, reset, restore] = useSessionStorageItem('name', 'Zelda', encode, decode);
+```
+
+- A `loading` value of `true` indicates that the value is being loaded from sessionStorage.
+- An `available` value of `true` indicates that `sessionStorage` is supported and available for use. 
+- The `reset()` function sets the value back to the provided default, or `null` if none was given.
+- The `restore()` function retrieves the latest value from sessionStorage. Use this if the sessionStorage value changes outside of this hook and you need to restore it to the latest.
+
+## Signature
+
+`useSessionStorageItem(keyName: string, defaultValue: any | null, encode: (val: any | null) => string, decode: (itemString: string | null) => any | null) => [any | null, (value: any | null) => void, boolean, () => void, () => void]`
+
+### Props
+
+| Prop | Type | Description |
+|------|------|-------------|
+| keyName | `string` | **Required.** Key name to use in sessionStorage. |
+| defaultValue | `any` &#124; `null` | **Required.** Provide a default value when the key's value is not found in sessionStorage. Will be immediately written to sessionStorage if not present. Use `null` for no default. |
+| encode | `(value: any) => string` | **Required.** Encode function for the value. Since sessionStorage uses strings only, all values must be encoded to a string. |
+| decode | `(itemString: string) => any` | **Required.** Encode function for the item string in sessionStorage. Since sessionStorage uses strings only, all values must be decoded from a string. |
+
+### Return
+
+The hook returns an array containing:
+
+| Index | Name | Type | Description |
+|-------|------|------|-------------|
+| 0 | value | `any` &#124; `null` | The value from sessionStorage, when `loading` is `false`. Will be the default value (or `null` if none provided) while loading is `true`. If `null` when not loading, the key was not found in sessionStorage. |
+| 1 | setValue | `(value: any` &#124; `null) => void` | Sets the value in sessionStorage. Provide `null` to set it back to the default value. Providing `null` will delete the key from sessionStorage if the default value is `null`. |
+| 2 | loading | `boolean` | `true` while the value loads from sessionStorage, `false` otherwise. |
+| 3 | available | `boolean` | `true` if sessionStorage is supported and available for use, `false` otherwise. |
+| 4 | reset | `() => void` | Reset the value to the default. |
+| 5 | restore | `() => void` | Retrieve the latest value from sessionStorage. Use this if the sessionStorage value changes outside of this hook and you need to restore it to the latest. |
+
+## Example
+
+The following example demonstrates a sessionStorage item with the key name `nameObj` and default `{ name: "Zelda" }` that uses 
+[`JSON.stringify()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
+and [`JSON.parse()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse) to
+convert the object to and from a `string` for use in sessionStorage (the same can be accomplished using [useSessionStorageObject](/useSessionStorageObject)).
+
+A second hook with the same key name is shown as well. This hook will synchronize with the first one when changed.
+
+<div style={{border: 'solid 2px #67788a', padding: '20px'}}>
+  <UseSessionStorageItemExample />
+</div>
+
+```jsx
+import * as React from 'react';
+import { useSessionStorageItem } from 'react-use-window-sessionstorage';
+
+export function UseSessionStorageItemExample() {
+  const defaultNameObject = { name: 'Zelda' };
+  const [enteredFirstName, setEnteredFirstName] = React.useState('');
+  const enteredNameObject = { name: enteredFirstName };
+  const encode = value => JSON.stringify(value);
+  const decode = itemString => JSON.parse(itemString);
+  const [nameObject, setNameObject, loading, available, reset] = useSessionStorageItem('nameObj', defaultNameObject, encode, decode);
+  const [nameObject2, setNameObject2, loading2] = useSessionStorageItem('nameObj', defaultNameObject, encode, decode);
+
+  return (
+    <div>
+      {!loading && (
+        <div>
+          <div>
+            Key "nameObj":{' { name: '}
+            <input
+              type="text"
+              value={enteredFirstName}
+              onChange={e => setEnteredFirstName(e.target.value)}
+              onKeyPress={e => e.key === 'Enter' && setNameObject(enteredNameObject)}
+            />
+            {' } '}
+            <button onClick={() => setNameObject(enteredNameObject)}>Set</button>
+          </div>
+          <div>
+            <strong>Stored name:</strong> {JSON.stringify(nameObject)}
+          </div>
+        </div>
+      )}
+      <div>
+        <button onClick={() => reset()}>Reset "nameObj" to default</button>
+      </div>
+      <hr />
+      {!loading2 && <div>Another "nameObj" hook (different hook, will synchronize): {JSON.stringify(nameObject)}</div>}
+    </div>
+  );
+}
+```
