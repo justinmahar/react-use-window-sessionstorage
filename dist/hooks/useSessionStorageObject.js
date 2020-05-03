@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var useSessionStorageItem_1 = require("./useSessionStorageItem");
 /**
- * See documentation: https://devboldly.github.io/react-use-window-sessionstorage/useSessionStorageObject
+ * See documentation: [useSessionStorageObject](https://devboldly.github.io/react-use-window-sessionstorage/useSessionStorageObject)
  *
  * This hook gets and sets an `Object` in [sessionStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage). This includes arrays.
  *

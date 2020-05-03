@@ -1,6 +1,6 @@
 import { SessionStorageItem } from './useSessionStorageItem';
 /**
- * See documentation: https://devboldly.github.io/react-use-window-sessionstorage/useSessionStorageString
+ * See documentation: [useSessionStorageString](https://devboldly.github.io/react-use-window-sessionstorage/useSessionStorageString)
  *
  * This hook gets and sets a `string` in [sessionStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage).
  *

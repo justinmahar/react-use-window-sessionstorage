@@ -10,7 +10,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importStar(require("react"));
 var emitter_singleton_1 = require("./emitter-singleton");
 /**
- * See documentation: https://devboldly.github.io/react-use-window-sessionstorage/useClearSessionStorage
+ * See documentation: [useClearSessionStorage](https://devboldly.github.io/react-use-window-sessionstorage/useClearSessionStorage)
  *
  * This hook calls [sessionStorage.clear()](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage) to clear all items from `sessionStorage`.
  *

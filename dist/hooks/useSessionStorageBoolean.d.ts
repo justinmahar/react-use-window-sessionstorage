@@ -1,6 +1,6 @@
 import { SessionStorageItem } from './useSessionStorageItem';
 /**
- * See documentation: https://devboldly.github.io/react-use-window-sessionstorage/useSessionStorageBoolean
+ * See documentation: [useSessionStorageBoolean](https://devboldly.github.io/react-use-window-sessionstorage/useSessionStorageBoolean)
  *
  * This hook gets and sets a `boolean` in [sessionStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage).
  *

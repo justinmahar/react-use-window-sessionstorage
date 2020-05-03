@@ -1,5 +1,5 @@
 /**
- * See documentation: https://devboldly.github.io/react-use-window-sessionstorage/useSessionStorageItem
+ * See documentation: [useSessionStorageItem](https://devboldly.github.io/react-use-window-sessionstorage/useSessionStorageItem)
  *
  * This hook gets and sets an item in [sessionStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage) using the provided encode and decode functions.
  *
