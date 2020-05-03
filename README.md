@@ -32,7 +32,7 @@ Changes to sessionStorage are synchronized across all hooks automatically.
 
 > **What is sessionStorage?** The `sessionStorage` property allows you to store `{key: value}` string data that is cleared when the page session ends. A page session lasts as long as the browser is open, and survives over page reloads and restores.
 
-> For localStorage, check out sister project [react-use-window-localstorage](https://devboldly.github.io/react-use-window-localstorage).
+> For localStorage, check out the companion project [react-use-window-localstorage](https://devboldly.github.io/react-use-window-localstorage).
 
 ### Features include:
 
