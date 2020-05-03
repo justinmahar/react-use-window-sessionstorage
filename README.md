@@ -1,5 +1,5 @@
 <h2 align="center">
-  <a href="https://github.com/devboldly/react-use-window-sessionstorage">React Use Window sessionStorage</a>
+  <a href="https://github.com/devboldly/react-use-window-sessionstorage">React Use Window.sessionStorage</a>
 </h2>
 <h3 align="center">
   React hooks for accessing the sessionStorage Web Storage API.
