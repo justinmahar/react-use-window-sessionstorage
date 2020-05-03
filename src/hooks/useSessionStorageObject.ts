@@ -1,7 +1,7 @@
 import { defaultDecode, defaultEncode, SessionStorageItem, useSessionStorageItem } from './useSessionStorageItem';
 
 /**
- * See documentation: https://devboldly.github.io/react-use-window-sessionstorage/useSessionStorageObject
+ * See documentation: [useSessionStorageObject](https://devboldly.github.io/react-use-window-sessionstorage/useSessionStorageObject)
  *
  * This hook gets and sets an `Object` in [sessionStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage). This includes arrays.
  *
