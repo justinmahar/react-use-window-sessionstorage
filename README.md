@@ -20,6 +20,8 @@
 
 Read the **[official documentation](https://devboldly.github.io/react-use-window-sessionstorage/)**.
 
+[![Demo](./src/__docz__/images/demo.gif "Demo")](https://devboldly.github.io/react-use-window-sessionstorage/useSessionStorageString#example)
+
 👁️ **[Live Demo](https://devboldly.github.io/react-use-window-sessionstorage/useSessionStorageString#example)**
 
 ## Overview
