@@ -2,7 +2,7 @@
   <a href="https://github.com/devboldly/react-use-window-sessionstorage">React Use Window.sessionStorage</a>
 </h2>
 <h3 align="center">
-  React hooks for accessing the sessionStorage [Web Storage API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API).
+  React hooks for accessing the sessionStorage <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API">Web Storage API</a>.
 </h3>
 <p align="center">
   <a href="https://badge.fury.io/js/react-use-window-sessionstorage">
