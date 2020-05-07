@@ -49,8 +49,6 @@ export function useSessionStorageItem<T>(
         else if (defaultValue !== null) {
           setShouldPush(true);
         }
-        // And set to the default value
-        setItemValue(defaultValue);
       } else {
         setAvailable(false);
       }
