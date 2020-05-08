@@ -24,9 +24,9 @@ export function useSessionStorageItem<T>(
 ): SessionStorageItem<T> {
   const [loading, setLoading] = React.useState<boolean>(true);
   const [shouldPush, setShouldPush] = React.useState<boolean>(false);
-  const [shouldPull, setShouldPull] = React.useState<boolean>(false);
-  const [value, setItemValue] = React.useState<SessionStorageValue<T>>(defaultValue);
+  const [itemString, setItemString] = React.useState<string | null>(null);
   const [available, setAvailable] = React.useState(true);
+  const [renderTime, setRenderTime] = React.useState(new Date().getTime());
 
   React.useEffect(() => {
     // Synchronize value with sessionStorage on first render
@@ -34,64 +34,59 @@ export function useSessionStorageItem<T>(
       setLoading(false);
       // Make sure sessionStorage is actually available
       if (isStorageAvailable()) {
-        // Get the item
-        const retrievedSessionStorageState = sessionStorage.getItem(keyName);
+        const currentItemString = sessionStorage.getItem(keyName);
         // If on first render we actually find a value, use it.
-        if (retrievedSessionStorageState !== null) {
+        if (currentItemString !== null) {
+          setItemString(sessionStorage.getItem(keyName));
+        }
+        // Else if we didn't find a value but a default one was provided, set it.
+        else if (defaultValue !== null) {
           try {
-            // Set to decoded value, or fall back to default when null
-            setItemValue(retrievedSessionStorageState !== null ? decode(retrievedSessionStorageState) : defaultValue);
+            setItemString(encode(defaultValue));
+            setShouldPush(true);
           } catch (e) {
             console.error(e);
           }
-        }
-        // Else if we didn't find a value but a default one was provided, push it.
-        else if (defaultValue !== null) {
-          setShouldPush(true);
         }
       } else {
         setAvailable(false);
       }
     }
-  }, [keyName, loading, defaultValue, decode, available]);
+  }, [keyName, loading, defaultValue, decode, available, encode]);
 
   React.useEffect(() => {
-    if (!loading) {
-      // Pull value from sessionStorage
-      if (shouldPull) {
-        try {
-          const retrievedSessionStorageState = sessionStorage.getItem(keyName);
-          setShouldPull(false);
-          // Set to decoded value, or fall back to default when null
-          setItemValue(retrievedSessionStorageState !== null ? decode(retrievedSessionStorageState) : defaultValue);
-        } catch (e) {
-          console.error(e);
-        }
-      }
+    if (!loading && available) {
       // Push value to sessionStorage
-      else if (shouldPush) {
+      if (shouldPush) {
         setShouldPush(false);
-        if (value !== null) {
-          try {
-            const encodedVal = encode(value);
-            sessionStorage.setItem(keyName, encodedVal);
-          } catch (e) {
-            console.error(e);
-          }
+        if (itemString !== null) {
+          sessionStorage.setItem(keyName, itemString);
         } else {
           // Remove when setting to null
           sessionStorage.removeItem(keyName);
         }
+        // Notify all hooks that have already been rendered.
+        getEmitterSingleton().emit(keyName, itemString);
       }
     }
-  }, [keyName, shouldPull, shouldPush, decode, defaultValue, value, encode, available, loading]);
+  }, [itemString, keyName, loading, shouldPush, available]);
+
+  React.useEffect(() => {
+    if (!loading && available && !shouldPush) {
+      // Check if the latest value from sessionStorage is different from current value
+      const trueValue = sessionStorage.getItem(keyName);
+      if (itemString !== trueValue) {
+        setItemString(trueValue);
+      }
+    }
+  });
 
   // Emitter handler (synchronizes hooks)
   React.useEffect(() => {
     let aborted = false;
-    const itemChangeListener = (value: SessionStorageValue<T>): void => {
+    const itemChangeListener = (itemString: string | null): void => {
       if (!aborted) {
-        setItemValue(value);
+        setRenderTime(new Date().getTime());
       }
     };
     const clearListener = (): void => {
@@ -110,23 +105,27 @@ export function useSessionStorageItem<T>(
 
   const setValue = React.useCallback(
     (newVal: SessionStorageValue<T>): void => {
-      const newValOrDefault = newVal !== null ? newVal : defaultValue;
-      setItemValue(newValOrDefault);
-      setShouldPush(true);
-      getEmitterSingleton().emit(keyName, newVal);
+      try {
+        if (newVal === null) {
+          setItemString(null);
+        } else {
+          setItemString(encode(newVal));
+        }
+        setShouldPush(true);
+      } catch (e) {
+        console.error(e);
+      }
     },
-    [defaultValue, keyName]
+    [encode]
   );
-
-  const restore = React.useCallback((): void => {
-    setShouldPull(true);
-  }, [setShouldPull]);
 
   const reset = React.useCallback((): void => {
     setValue(defaultValue);
   }, [defaultValue, setValue]);
 
-  return [value, setValue, loading, available, reset, restore];
+  const value = itemString !== null ? decode(itemString) : defaultValue;
+
+  return [value, setValue, loading, available, reset];
 }
 export type SessionStorageValue<T> = T | null;
 
@@ -135,7 +134,6 @@ export type SessionStorageItem<T> = [
   (value: SessionStorageValue<T>) => void,
   boolean,
   boolean,
-  () => void,
   () => void
 ];
 

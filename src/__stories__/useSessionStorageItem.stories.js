@@ -18,71 +18,45 @@ export default {
 // Needed to wrap the hook and give it visual representation.
 const HookComponent = () => {
   const defaultCheese = 'Cheddar';
-  const [
-    favCheese,
-    setFavCheese,
-    favCheeseLoading,
-    favCheeseAvailable,
-    resetFavCheese,
-    restoreFavCheese,
-  ] = useSessionStorageString('favCheese', defaultCheese);
-  const [
-    favCheese2,
-    setFavCheese2,
-    favCheese2Loading,
-    favCheese2Available,
-    resetFavCheese2,
-    restoreFavCheese2,
-  ] = useSessionStorageString('favCheese', defaultCheese);
-  const [
-    favCheese3,
-    setFavCheese3,
-    favCheese3Loading,
-    favCheese3Available,
-    resetFavCheese3,
-    restoreFavCheese3,
-  ] = useSessionStorageString('favCheese', defaultCheese);
+  const [favCheese, setFavCheese, favCheeseLoading, favCheeseAvailable, resetFavCheese] = useSessionStorageString(
+    'favCheese',
+    defaultCheese
+  );
+  const [favCheese2, setFavCheese2, favCheese2Loading, favCheese2Available, resetFavCheese2] = useSessionStorageString(
+    'favCheese',
+    defaultCheese
+  );
+  const [favCheese3, setFavCheese3, favCheese3Loading, favCheese3Available, resetFavCheese3] = useSessionStorageString(
+    'favCheese',
+    defaultCheese
+  );
 
-  const [
-    favAnimal,
-    setFavAnimal,
-    favAnimalLoading,
-    favAnimalAvailable,
-    resetFavAnimal,
-    restoreFavAnimal,
-  ] = useSessionStorageString('favAnimal');
+  const [favAnimal, setFavAnimal, favAnimalLoading, favAnimalAvailable, resetFavAnimal] = useSessionStorageString(
+    'favAnimal'
+  );
   const [
     numChickens,
     setNumChickens,
     numChickensLoading,
     numChickensAvailable,
     resetNumChickens,
-    restoreNumChickens,
   ] = useSessionStorageNumber('numChickens', 3);
-  const [
-    isAwesome,
-    setIsAwesome,
-    isAwesomeLoading,
-    isAwesomeAvailable,
-    resetIsAwesome,
-    restoreIsAwesome,
-  ] = useSessionStorageBoolean('isAwesome', true);
-  const [
-    inventory,
-    setInventory,
-    inventoryLoading,
-    inventoryAvailable,
-    resetInventory,
-    restoreInventory,
-  ] = useSessionStorageObject('inventory', {
-    books: [
-      { title: 'Adventures of Link', ISBN: '123-4123-123' },
-      { title: 'Potion Recipes', ISBN: '39138-23923-23' },
-    ],
-    swordCount: 1,
-    inventoryFull: false,
-    owner: 'Zelda',
-  });
+  const [isAwesome, setIsAwesome, isAwesomeLoading, isAwesomeAvailable, resetIsAwesome] = useSessionStorageBoolean(
+    'isAwesome',
+    true
+  );
+  const [inventory, setInventory, inventoryLoading, inventoryAvailable, resetInventory] = useSessionStorageObject(
+    'inventory',
+    {
+      books: [
+        { title: 'Adventures of Link', ISBN: '123-4123-123' },
+        { title: 'Potion Recipes', ISBN: '39138-23923-23' },
+      ],
+      swordCount: 1,
+      inventoryFull: false,
+      owner: 'Zelda',
+    }
+  );
 
   const clearSessionStorage = useClearSessionStorage();
 
@@ -100,8 +74,7 @@ const HookComponent = () => {
         </button>{' '}
         <button onClick={() => resetFavCheese()} disabled={favCheese === defaultCheese}>
           Reset
-        </button>{' '}
-        <button onClick={() => restoreFavCheese()}>Restore</button>{' '}
+        </button>
       </div>
       <div>
         Favorite Cheese 2 (default Cheddar):{' '}
@@ -115,8 +88,7 @@ const HookComponent = () => {
         </button>{' '}
         <button onClick={() => resetFavCheese2()} disabled={favCheese2 === defaultCheese}>
           Reset
-        </button>{' '}
-        <button onClick={() => restoreFavCheese2()}>Restore</button>{' '}
+        </button>
       </div>
       <div>
         Favorite Cheese 3 (default Cheddar):{' '}
@@ -130,8 +102,7 @@ const HookComponent = () => {
         </button>{' '}
         <button onClick={() => resetFavCheese3()} disabled={favCheese3 === defaultCheese}>
           Reset
-        </button>{' '}
-        <button onClick={() => restoreFavCheese3()}>Restore</button>{' '}
+        </button>
       </div>
       <div>
         Favorite Animal (no default): {favAnimalLoading ? 'Loading...' : favAnimal ? favAnimal : <code>null</code>}
@@ -144,8 +115,7 @@ const HookComponent = () => {
         </button>{' '}
         <button onClick={() => resetFavAnimal()} disabled={favAnimal === null}>
           Reset
-        </button>{' '}
-        <button onClick={() => restoreFavAnimal()}>Restore</button>{' '}
+        </button>
       </div>
       <div>
         Number of chickens (default 3):{' '}
@@ -159,8 +129,7 @@ const HookComponent = () => {
         </button>{' '}
         <button onClick={() => resetNumChickens()} disabled={numChickens === 3}>
           Reset
-        </button>{' '}
-        <button onClick={() => restoreNumChickens()}>Restore</button>{' '}
+        </button>
       </div>
       <div>
         Awesome (default true)?{' '}
@@ -173,8 +142,7 @@ const HookComponent = () => {
         </button>{' '}
         <button onClick={() => resetIsAwesome()} disabled={isAwesome !== null && isAwesome}>
           Reset
-        </button>{' '}
-        <button onClick={() => restoreIsAwesome()}>Restore</button>{' '}
+        </button>
       </div>
       <div>
         Inventory (default provided):{' '}
@@ -198,8 +166,7 @@ const HookComponent = () => {
           <button onClick={() => setInventory(null)}>
             Set to <code>null</code>
           </button>{' '}
-          <button onClick={() => resetInventory()}>Reset</button>{' '}
-          <button onClick={() => restoreInventory()}>Restore</button>{' '}
+          <button onClick={() => resetInventory()}>Reset</button>
         </div>
       </div>
       <div>
@@ -230,47 +197,8 @@ const HookComponent = () => {
           value back to the default (or <code>null</code> if no default was provided).
         </p>
         <p>
-          Local Storage uses <code>null</code> to represent a missing value, so setting a value to <code>null</code>{' '}
+          sessionStorage uses <code>null</code> to represent a missing value, so setting a value to <code>null</code>{' '}
           will also cause it to fall back to a default, if present.
-        </p>
-        <p>
-          If something changes sessionStorage outside the hook (such as calling <code>sessionStorage.clear()</code> to clear
-          all keys/values), React has no idea this is happening. You&apos;ll need a way to restore the hook items to the
-          actual state in sessionStorage. To accomplish this, you can use the <code>restore</code> function returned by
-          the hook.
-        </p>
-        <p>
-          The following buttons change sessionStorage outside of the hook (React can&apos;t see these changes):
-          <br />
-          <button onClick={() => (sessionStorage ? sessionStorage.clear() : undefined)}>
-            <code>sessionStorage.clear()</code>
-          </button>{' '}
-          <button onClick={() => (sessionStorage ? sessionStorage.setItem('favCheese', 'Gouda') : undefined)}>
-            Set Cheese
-          </button>{' '}
-          <button onClick={() => (sessionStorage ? sessionStorage.setItem('favAnimal', 'Koala') : undefined)}>
-            Set Animal
-          </button>
-        </p>
-      </div>
-      <div>
-        <p>
-          This button restores all hooks from sessionStorage using <code>restore</code>:<br />
-          <button
-            onClick={() =>
-              sessionStorage
-                ? restoreFavCheese() ||
-                  restoreFavCheese2() ||
-                  restoreFavCheese3() ||
-                  restoreFavAnimal() ||
-                  restoreNumChickens() ||
-                  restoreIsAwesome() ||
-                  restoreInventory()
-                : undefined
-            }
-          >
-            Restore All
-          </button>{' '}
         </p>
       </div>
     </>

@@ -39,13 +39,12 @@ and decoded using [`JSON.parse()`](https://developer.mozilla.org/en-US/docs/Web/
 The hook provides additional features in its return array, should you be interested:
 
 ```jsx
-const [value, setValue, loading, available, reset, restore] = useSessionStorageNumber('pi', 3.14159);
+const [value, setValue, loading, available, reset] = useSessionStorageNumber('pi', 3.14159);
 ```
 
 - A `loading` value of `true` indicates that the value is being loaded from sessionStorage.
 - An `available` value of `true` indicates that `sessionStorage` is supported and available for use. 
 - The `reset()` function sets the value back to the provided default, or `null` if none was given.
-- The `restore()` function retrieves the latest value from sessionStorage. Use this if the sessionStorage value changes outside of this hook and you need to restore it to the latest.
 
 ## Signature
 
@@ -69,7 +68,6 @@ The hook returns an array containing:
 | 2 | loading | `boolean` | `true` while the value loads from sessionStorage, `false` otherwise. |
 | 3 | available | `boolean` | `true` if sessionStorage is supported and available for use, `false` otherwise. |
 | 4 | reset | `() => void` | Reset the value to the default. |
-| 5 | restore | `() => void` | Retrieve the latest value from sessionStorage. Use this if the sessionStorage value changes outside of this hook and you need to restore it to the latest. |
 
 ## Example
 
