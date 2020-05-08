@@ -1,6 +1,6 @@
 {
   "name": "react-use-window-sessionstorage",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "author": "DevBoldly <devboldly@gmail.com>",
   "description": "React hooks for accessing the sessionStorage Web Storage API.",
   "homepage": "https://devboldly.github.io/react-use-window-sessionstorage/",
