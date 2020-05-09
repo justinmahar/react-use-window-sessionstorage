@@ -24,6 +24,8 @@ Read the **[official documentation](https://devboldly.github.io/react-use-window
 
 👁️ **[Live Demo](https://devboldly.github.io/react-use-window-sessionstorage/useSessionStorageString#example)**
 
+*For localStorage, see [react-use-window-localstorage](https://devboldly.github.io/react-use-window-localstorage).*
+
 ## Overview
 
 A set of hooks to easily store and retrieve data from [sessionStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage).
