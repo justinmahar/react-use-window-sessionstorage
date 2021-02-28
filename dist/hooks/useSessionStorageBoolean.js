@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.useSessionStorageBoolean = void 0;
 var useSessionStorageItem_1 = require("./useSessionStorageItem");
 /**
  * See documentation: [useSessionStorageBoolean](https://justinmahar.github.io/react-use-window-sessionstorage/useSessionStorageBoolean)

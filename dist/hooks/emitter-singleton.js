@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.clearEvent = exports.getEmitterSingleton = void 0;
 var events_1 = require("events");
 /**
  * Used to keep hooks synchronized.
