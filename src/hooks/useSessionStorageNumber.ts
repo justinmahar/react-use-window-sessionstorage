@@ -1,7 +1,7 @@
 import { SessionStorageItem, useSessionStorageItem, defaultEncode, defaultDecode } from './useSessionStorageItem';
 
 /**
- * See documentation: [useSessionStorageNumber](https://devboldly.github.io/react-use-window-sessionstorage/useSessionStorageNumber)
+ * See documentation: [useSessionStorageNumber](https://justinmahar.github.io/react-use-window-sessionstorage/useSessionStorageNumber)
  *
  * This hook gets and sets a `number` in [sessionStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage).
  *

@@ -2,12 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var useSessionStorageItem_1 = require("./useSessionStorageItem");
 /**
- * See documentation: [useSessionStorageObject](https://devboldly.github.io/react-use-window-sessionstorage/useSessionStorageObject)
+ * See documentation: [useSessionStorageObject](https://justinmahar.github.io/react-use-window-sessionstorage/useSessionStorageObject)
  *
  * This hook gets and sets an `Object` in [sessionStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage). This includes arrays.
  *
  * Uses [`JSON.stringify()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
- * and [`JSON.parse()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse) for string encoding, so make sure your object is compatible with that interface. For objects that `JSON.stringify()` can't handle, provide your own encoding via [useSessionStorageItem](https://devboldly.github.io/react-use-window-sessionstorage/useSessionStorageItem).
+ * and [`JSON.parse()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse) for string encoding, so make sure your object is compatible with that interface. For objects that `JSON.stringify()` can't handle, provide your own encoding via [useSessionStorageItem](https://justinmahar.github.io/react-use-window-sessionstorage/useSessionStorageItem).
  *
  * Features synchronization across hooks sharing the same key name.
  *

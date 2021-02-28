@@ -6,33 +6,41 @@ route: /
 # NOTE: Menu ordering is configured in doczrc.js
 ---
 
-import { Playground } from 'docz';
+import { Playground } from "docz";
 
-import { SvgIcon } from 'dboldly-react-tools';
-import githubSvg from '../__docz__/images/github.svg';
-import demoGif from '../__docz__/images/demo.gif';
+import { SvgIcon } from "dboldly-react-tools";
+import githubSvg from "../__docz__/images/github.svg";
+import demoGif from "../__docz__/images/demo.gif";
 
-<div style={{
-	display: 'flex',
-	alignItems: 'center',
-}}>
+<div
+  style={{
+    display: "flex",
+    alignItems: "center",
+  }}
+>
   <div>
     <h1>React Use Window.sessionStorage</h1>
   </div>
   <div>
-    <a href="https://github.com/devboldly/react-use-window-sessionstorage/" target="_blank" rel="noopener noreferrer">
-      <SvgIcon src={githubSvg} size={28} style={{ margin: '0 0 0 20px' }} />
+    <a
+      href="https://github.com/justinmahar/react-use-window-sessionstorage/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <SvgIcon src={githubSvg} size={28} style={{ margin: "0 0 0 20px" }} />
     </a>
   </div>
 </div>
 
 **React hooks for accessing the sessionStorage [Web Storage API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API).**
 
-<a href="https://devboldly.github.io/react-use-window-sessionstorage/useSessionStorageString#example"><img src={demoGif} /></a>
+<a href="https://justinmahar.github.io/react-use-window-sessionstorage/useSessionStorageString#example">
+  <img src={demoGif} />
+</a>
 
 👁️ **[Live Demo](/useSessionStorageString#example)**
 
-*For localStorage, see [react-use-window-localstorage](https://devboldly.github.io/react-use-window-localstorage).*
+_For localStorage, see [react-use-window-localstorage](https://justinmahar.github.io/react-use-window-localstorage)._
 
 ## Overview
 
@@ -44,7 +52,7 @@ Changes to sessionStorage are synchronized across all hooks automatically.
 
 > **What is sessionStorage?** The `sessionStorage` property allows you to store `{key: value}` string data that is cleared when the page session ends. A page session lasts as long as the browser is open, and survives over page reloads and restores.
 
-> For localStorage, check out the companion project [react-use-window-localstorage](https://devboldly.github.io/react-use-window-localstorage).
+> For localStorage, check out the companion project [react-use-window-localstorage](https://justinmahar.github.io/react-use-window-localstorage).
 
 ### Features include:
 
@@ -76,14 +84,14 @@ npm i react-use-window-sessionstorage
 Use the [useSessionStorageString](/useSessionStorageString) hook:
 
 ```jsx
-import { useSessionStorageString } from 'react-use-window-sessionstorage';
+import { useSessionStorageString } from "react-use-window-sessionstorage";
 ```
 
 In your function component:
 
 ```jsx
-const defaultValue = 'cyan';
-const [value, setValue] = useSessionStorageString('favColor', defaultValue);
+const defaultValue = "cyan";
+const [value, setValue] = useSessionStorageString("favColor", defaultValue);
 ```
 
 ### Storing Objects
@@ -91,14 +99,14 @@ const [value, setValue] = useSessionStorageString('favColor', defaultValue);
 Use the [useSessionStorageObject](/useSessionStorageObject) hook:
 
 ```jsx
-import { useSessionStorageObject } from 'react-use-window-sessionstorage';
+import { useSessionStorageObject } from "react-use-window-sessionstorage";
 ```
 
 In your function component:
 
 ```jsx
-const defaultValue = { a: 'hello', b: 123 };
-const [value, setValue] = useSessionStorageObject('myObj', defaultValue);
+const defaultValue = { a: "hello", b: 123 };
+const [value, setValue] = useSessionStorageObject("myObj", defaultValue);
 ```
 
 Note that your objects must be compatible with [JSON.stringify()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify). Use [useSessionStorageItem](/useSessionStorageItem) otherwise.
@@ -108,14 +116,17 @@ Note that your objects must be compatible with [JSON.stringify()](https://develo
 Use the [useSessionStorageBoolean](/useSessionStorageBoolean) hook:
 
 ```jsx
-import { useSessionStorageBoolean } from 'react-use-window-sessionstorage';
+import { useSessionStorageBoolean } from "react-use-window-sessionstorage";
 ```
 
 In your function component:
 
 ```jsx
 const defaultValue = true;
-const [value, setValue] = useSessionStorageBoolean('swordEquipped', defaultValue);
+const [value, setValue] = useSessionStorageBoolean(
+  "swordEquipped",
+  defaultValue
+);
 ```
 
 ### Storing Numbers
@@ -123,14 +134,17 @@ const [value, setValue] = useSessionStorageBoolean('swordEquipped', defaultValue
 Use the [useSessionStorageNumber](/useSessionStorageNumber) hook:
 
 ```jsx
-import { useSessionStorageNumber } from 'react-use-window-sessionstorage';
+import { useSessionStorageNumber } from "react-use-window-sessionstorage";
 ```
 
 In your function component:
 
 ```jsx
 const defaultValue = 3.14159;
-const [value, setValue] = useSessionStorageNumber('importantNumber', defaultValue);
+const [value, setValue] = useSessionStorageNumber(
+  "importantNumber",
+  defaultValue
+);
 ```
 
 > Note: All value defaults are optional. Hooks will return `null` if none is provided.
@@ -142,16 +156,21 @@ If you'd like to store something other than the data types above, define your ow
 Here's a starting point:
 
 ```jsx
-import { useSessionStorageItem } from 'react-use-window-sessionstorage';
+import { useSessionStorageItem } from "react-use-window-sessionstorage";
 ```
 
 In your function component:
 
 ```jsx
-const defaultValue = 'something custom';
-const encode = value => JSON.stringify(value);
-const decode = itemString => JSON.parse(itemString);
-const [value, setValue] = useSessionStorageItem('name', defaultValue, encode, decode);
+const defaultValue = "something custom";
+const encode = (value) => JSON.stringify(value);
+const decode = (itemString) => JSON.parse(itemString);
+const [value, setValue] = useSessionStorageItem(
+  "name",
+  defaultValue,
+  encode,
+  decode
+);
 ```
 
 Provide `null` for no default value.
@@ -161,24 +180,27 @@ Provide `null` for no default value.
 All hooks provide additional features in their return arrays, should you be interested:
 
 ```jsx
-const [value, setValue, loading, available, reset] = useSessionStorageString('favColor', 'cyan');
+const [value, setValue, loading, available, reset] = useSessionStorageString(
+  "favColor",
+  "cyan"
+);
 ```
 
 - A `loading` value of `true` indicates that the value is being loaded from sessionStorage.
-- An `available` value of `true` indicates that `sessionStorage` is supported and available for use. 
+- An `available` value of `true` indicates that `sessionStorage` is supported and available for use.
 - The `reset()` function sets the value back to the provided default, or `null` if none was given.
 
 ### Clearing `sessionStorage`
 
 ```jsx
-import { useClearSessionStorage } from 'react-use-window-sessionstorage';
+import { useClearSessionStorage } from "react-use-window-sessionstorage";
 ```
 
 ```jsx
 const clearSessionStorage = useClearSessionStorage();
 ```
 
-Call `clearSessionStorage()` to clear all values in sessionStorage using [sessionStorage.clear()](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage) 
+Call `clearSessionStorage()` to clear all values in sessionStorage using [sessionStorage.clear()](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)
 and reset all hooks to their defaults (or `null` if none provided).
 
 ## TypeScript
@@ -195,6 +217,6 @@ For major changes, open an issue first to discuss what you'd like to change.
 
 See [Kindling](https://tinyurl.com/kindlingscripts) for npm script documentation.
 
-## ⭐ Found It Helpful? [Star It!](https://github.com/devboldly/react-use-window-sessionstorage/stargazers)
+## ⭐ Found It Helpful? [Star It!](https://github.com/justinmahar/react-use-window-sessionstorage/stargazers)
 
-If you found this project helpful, let the community know by giving it a [star](https://github.com/devboldly/react-use-window-sessionstorage/stargazers): [👉⭐](https://github.com/devboldly/react-use-window-sessionstorage/stargazers)
+If you found this project helpful, let the community know by giving it a [star](https://github.com/justinmahar/react-use-window-sessionstorage/stargazers): [👉⭐](https://github.com/justinmahar/react-use-window-sessionstorage/stargazers)
