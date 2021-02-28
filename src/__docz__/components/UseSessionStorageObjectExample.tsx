@@ -18,15 +18,15 @@ export function UseSessionStorageObjectExample(): JSX.Element {
             <input
               type="text"
               value={enteredFirstName}
-              onChange={e => setEnteredFirstName(e.target.value)}
-              onKeyPress={e => e.key === 'Enter' && setValue(enteredObj)}
+              onChange={(e) => setEnteredFirstName(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && setValue(enteredObj)}
             />
             , last:
             <input
               type="text"
               value={enteredLastName}
-              onChange={e => setEnteredLastName(e.target.value)}
-              onKeyPress={e => e.key === 'Enter' && setValue(enteredObj)}
+              onChange={(e) => setEnteredLastName(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && setValue(enteredObj)}
             />
             {' } '}
             <button onClick={() => setValue(enteredObj)}>Set</button>

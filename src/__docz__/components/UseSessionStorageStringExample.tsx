@@ -16,8 +16,8 @@ export function UseSessionStorageStringExample(): JSX.Element {
             <input
               type="text"
               value={enteredValue}
-              onChange={e => setEnteredValue(e.target.value)}
-              onKeyPress={e => e.key === 'Enter' && setValue(enteredValue)}
+              onChange={(e) => setEnteredValue(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && setValue(enteredValue)}
             />
             <button onClick={() => setValue(enteredValue)}>Set</button>
           </div>

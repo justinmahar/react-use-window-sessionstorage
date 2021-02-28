@@ -20,7 +20,7 @@ export function useSessionStorageItem<T>(
   keyName: string,
   defaultValue: SessionStorageValue<T> = null,
   encode: (value: T) => string,
-  decode: (itemString: string) => T
+  decode: (itemString: string) => T,
 ): SessionStorageItem<T> {
   const [loading, setLoading] = React.useState<boolean>(true);
   const [shouldPush, setShouldPush] = React.useState<boolean>(false);
@@ -116,7 +116,7 @@ export function useSessionStorageItem<T>(
         console.error(e);
       }
     },
-    [encode]
+    [encode],
   );
 
   const reset = React.useCallback((): void => {
@@ -134,7 +134,7 @@ export type SessionStorageItem<T> = [
   (value: SessionStorageValue<T>) => void,
   boolean,
   boolean,
-  () => void
+  () => void,
 ];
 
 export function defaultEncode<T>(value: T): string {

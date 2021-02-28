@@ -4,7 +4,7 @@ import { defaultDecode, defaultEncode, useSessionStorageItem } from '../hooks/us
 describe('useSessionStorageItem Hook', () => {
   test('should run without crashing', () => {
     const { result } = renderHook(() =>
-      useSessionStorageItem('message', 'Son of a submariner!', defaultEncode, defaultDecode)
+      useSessionStorageItem('message', 'Son of a submariner!', defaultEncode, defaultDecode),
     );
     expect(result.error).toBe(undefined);
   });

@@ -10,11 +10,14 @@ import { SessionStorageItem, useSessionStorageItem } from './useSessionStorageIt
  * @param keyName - **Required.** Key name to use in sessionStorage.
  * @param defaultValue - Optional. Provide a default `string` value when the key's value is not found in sessionStorage. Will be immediately written to sessionStorage if not present. Use `null` for no default.
  */
-export function useSessionStorageString(keyName: string, defaultValue: string | null = null): SessionStorageItem<string> {
+export function useSessionStorageString(
+  keyName: string,
+  defaultValue: string | null = null,
+): SessionStorageItem<string> {
   return useSessionStorageItem(
     keyName,
     defaultValue,
     (value: string) => value,
-    itemString => itemString
+    (itemString) => itemString,
   );
 }

@@ -10,6 +10,9 @@ import { SessionStorageItem, useSessionStorageItem, defaultEncode, defaultDecode
  * @param keyName - **Required.** Key name to use in sessionStorage.
  * @param defaultValue - Optional. Provide a default `number` value when the key's value is not found in sessionStorage. Will be immediately written to sessionStorage if not present. Use `null` for no default.
  */
-export function useSessionStorageNumber(keyName: string, defaultValue: number | null = null): SessionStorageItem<number> {
+export function useSessionStorageNumber(
+  keyName: string,
+  defaultValue: number | null = null,
+): SessionStorageItem<number> {
   return useSessionStorageItem(keyName, defaultValue, defaultEncode, defaultDecode);
 }

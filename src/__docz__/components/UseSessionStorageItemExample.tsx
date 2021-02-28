@@ -5,13 +5,13 @@ export function UseSessionStorageItemExample(): JSX.Element {
   const defaultNameObject = { name: 'Zelda' };
   const [enteredFirstName, setEnteredFirstName] = React.useState('');
   const enteredNameObject = { name: enteredFirstName };
-  const encode = value => JSON.stringify(value);
-  const decode = itemString => JSON.parse(itemString);
+  const encode = (value) => JSON.stringify(value);
+  const decode = (itemString) => JSON.parse(itemString);
   const [nameObject, setNameObject, loading, available, reset] = useSessionStorageItem(
     'nameObj',
     defaultNameObject,
     encode,
-    decode
+    decode,
   );
   const [nameObject2, setNameObject2, loading2] = useSessionStorageItem('nameObj', defaultNameObject, encode, decode);
 
@@ -24,8 +24,8 @@ export function UseSessionStorageItemExample(): JSX.Element {
             <input
               type="text"
               value={enteredFirstName}
-              onChange={e => setEnteredFirstName(e.target.value)}
-              onKeyPress={e => e.key === 'Enter' && setNameObject(enteredNameObject)}
+              onChange={(e) => setEnteredFirstName(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && setNameObject(enteredNameObject)}
             />
             {' } '}
             <button onClick={() => setNameObject(enteredNameObject)}>Set</button>

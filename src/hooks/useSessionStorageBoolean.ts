@@ -12,7 +12,7 @@ import { SessionStorageItem, useSessionStorageItem, defaultEncode, defaultDecode
  */
 export function useSessionStorageBoolean(
   keyName: string,
-  defaultValue: boolean | null = null
+  defaultValue: boolean | null = null,
 ): SessionStorageItem<boolean> {
   return useSessionStorageItem(keyName, defaultValue, defaultEncode, defaultDecode);
 }

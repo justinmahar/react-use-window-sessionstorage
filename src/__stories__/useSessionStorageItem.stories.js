@@ -20,19 +20,19 @@ const HookComponent = () => {
   const defaultCheese = 'Cheddar';
   const [favCheese, setFavCheese, favCheeseLoading, favCheeseAvailable, resetFavCheese] = useSessionStorageString(
     'favCheese',
-    defaultCheese
+    defaultCheese,
   );
   const [favCheese2, setFavCheese2, favCheese2Loading, favCheese2Available, resetFavCheese2] = useSessionStorageString(
     'favCheese',
-    defaultCheese
+    defaultCheese,
   );
   const [favCheese3, setFavCheese3, favCheese3Loading, favCheese3Available, resetFavCheese3] = useSessionStorageString(
     'favCheese',
-    defaultCheese
+    defaultCheese,
   );
 
   const [favAnimal, setFavAnimal, favAnimalLoading, favAnimalAvailable, resetFavAnimal] = useSessionStorageString(
-    'favAnimal'
+    'favAnimal',
   );
   const [
     numChickens,
@@ -43,7 +43,7 @@ const HookComponent = () => {
   ] = useSessionStorageNumber('numChickens', 3);
   const [isAwesome, setIsAwesome, isAwesomeLoading, isAwesomeAvailable, resetIsAwesome] = useSessionStorageBoolean(
     'isAwesome',
-    true
+    true,
   );
   const [inventory, setInventory, inventoryLoading, inventoryAvailable, resetInventory] = useSessionStorageObject(
     'inventory',
@@ -55,7 +55,7 @@ const HookComponent = () => {
       swordCount: 1,
       inventoryFull: false,
       owner: 'Zelda',
-    }
+    },
   );
 
   const clearSessionStorage = useClearSessionStorage();
@@ -189,7 +189,7 @@ const HookComponent = () => {
         </p>
       </div>
       <div>
-        Clear all using hook (synchronizes): <button onClick={e => clearSessionStorage()}>Clear</button>
+        Clear all using hook (synchronizes): <button onClick={(e) => clearSessionStorage()}>Clear</button>
       </div>
       <div>
         <p>
