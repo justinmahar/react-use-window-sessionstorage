@@ -1,6 +1,6 @@
 {
   "name": "react-use-window-sessionstorage",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "author": "Justin Mahar <contact@justinmahar.com>",
   "description": "[⛔️ DEPRECATED] React hooks for accessing the sessionStorage Web Storage API.",
   "homepage": "https://justinmahar.github.io/react-use-window-sessionstorage/",
